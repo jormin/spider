@@ -75,11 +75,6 @@ func (e *Engine) Run() {
 		// 处理采集任务
 		case fetchJob = <-e.fetchJobs:
 			go func(fetchJob *FetchJob) {
-				parser, ok := e.Parsers[fetchJob.Tag]
-				// 检测有没有对应的解析器
-				if !ok {
-					return
-				}
 				// 获取客户端
 				fetcherClient := e.getFetcherClient()
 				// 归还客户端
@@ -89,15 +84,17 @@ func (e *Engine) Run() {
 					return
 				}
 				// 提交解析任务
-				e.SubmitParseJob(fetchJob, &content, parser)
+				e.SubmitParseJob(fetchJob, &content)
 			}(fetchJob)
 		// 处理解析任务
 		case parseJob = <-e.parseJobs:
-			if parseJob.Parser == nil {
+			// 检测有没有对应的解析器
+			parser, ok := e.Parsers[fetchJob.Tag]
+			if !ok {
 				return
 			}
 			go func(parseJob *ParseJob) {
-				result, err := parseJob.Parser.Parse(parseJob)
+				result, err := parser.Parse(parseJob)
 				if err != nil {
 					return
 				}
@@ -105,11 +102,12 @@ func (e *Engine) Run() {
 			}(parseJob)
 		// 处理存储任务
 		case saveJob = <-e.saveJobs:
+			// 检测有没有对应的存储器
+			saver, ok := e.Savers[fetchJob.Tag]
+			if !ok {
+				return
+			}
 			go func(saveJob *SaveJob) {
-				saver, ok := e.Savers[fetchJob.Tag]
-				if !ok {
-					return
-				}
 				err := saver.Save(saveJob)
 				if err != nil {
 					return
@@ -161,11 +159,10 @@ func (e *Engine) SubmitFetchJob(job *FetchJob) {
 }
 
 // 提交解析任务
-func (e *Engine) SubmitParseJob(job *FetchJob, content *[]byte, p Parser) {
+func (e *Engine) SubmitParseJob(job *FetchJob, content *[]byte) {
 	e.parseJobs <- &ParseJob{
 		FetchJob: job,
 		Content:  content,
-		Parser:   p,
 	}
 }
 
