@@ -1,4 +1,4 @@
-module gitlab.wcxst.com/jormin/ddc
+module gitlab.wcxst.com/jormin/spider
 
 go 1.15
 
