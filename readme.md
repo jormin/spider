@@ -33,8 +33,8 @@ engine := spider.NewEngine(
 engine.SubmitFetchJob(
     &spider.FetchJob{
         Tag:   TagList,
-        Title: "西安安居客",
-        Url:   "https://xa.fang.anjuke.com/loupan/all/p1/",
+        Title: "your title",
+        Url:   "your url",
     },
 )
 
@@ -48,6 +48,7 @@ engine.Run()
 // 解析器
 type ListParser struct{}
 
+// 自定义的解析方法
 func (p *ListParser) Parse(job *spider.ParseJob) (*spider.ParseResult, error) {
     return nil
 }
@@ -59,7 +60,7 @@ func (p *ListParser) Parse(job *spider.ParseJob) (*spider.ParseResult, error) {
 // 存储器
 type ListSaver struct {}
 
-// 存储
+// 自定义的存储方法
 func (l ListSaver) Save(job *spider.SaveJob) error {
     return nil
 }
