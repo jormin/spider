@@ -42,7 +42,7 @@ engine.SubmitFetchJob(
 engine.Run()
 ```
 
-### 采集器
+### 解析器
 
 ```go
 // 解析器
