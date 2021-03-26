@@ -88,12 +88,12 @@ func (e *Engine) Run() {
 			}(fetchJob)
 		// 处理解析任务
 		case parseJob = <-e.parseJobs:
-			// 检测有没有对应的解析器
-			parser, ok := e.Parsers[fetchJob.Tag]
-			if !ok {
-				return
-			}
 			go func(parseJob *ParseJob) {
+				// 检测有没有对应的解析器
+				parser, ok := e.Parsers[fetchJob.Tag]
+				if !ok {
+					return
+				}
 				result, err := parser.Parse(parseJob)
 				if err != nil {
 					return
@@ -102,12 +102,12 @@ func (e *Engine) Run() {
 			}(parseJob)
 		// 处理存储任务
 		case saveJob = <-e.saveJobs:
-			// 检测有没有对应的存储器
-			saver, ok := e.Savers[fetchJob.Tag]
-			if !ok {
-				return
-			}
 			go func(saveJob *SaveJob) {
+				// 检测有没有对应的存储器
+				saver, ok := e.Savers[fetchJob.Tag]
+				if !ok {
+					return
+				}
 				err := saver.Save(saveJob)
 				if err != nil {
 					return
