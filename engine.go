@@ -90,7 +90,7 @@ func (e *Engine) Run() {
 		case parseJob = <-e.parseJobs:
 			go func(parseJob *ParseJob) {
 				// 检测有没有对应的解析器
-				parser, ok := e.Parsers[fetchJob.Tag]
+				parser, ok := e.Parsers[parseJob.FetchJob.Tag]
 				if !ok {
 					return
 				}
@@ -104,7 +104,7 @@ func (e *Engine) Run() {
 		case saveJob = <-e.saveJobs:
 			go func(saveJob *SaveJob) {
 				// 检测有没有对应的存储器
-				saver, ok := e.Savers[fetchJob.Tag]
+				saver, ok := e.Savers[saveJob.FetchJob.Tag]
 				if !ok {
 					return
 				}
