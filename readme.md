@@ -8,10 +8,10 @@
 
 ```shell script
 # 更改库获取方式
-git config --global url."ssh://git@gitlab.wcxst.com:2224".insteadOf "https://gitlab.wcxst.com"
-git config --global url."ssh://git@gitlab.wcxst.com:2224".insteadOf "http://gitlab.wcxst.com"
+git config --global url."ssh://git@github.com:2224".insteadOf "https://github.com"
+git config --global url."ssh://git@github.com:2224".insteadOf "http://github.com"
 # 设置私库。如果要永久有效请配置到环境变量
-export GOPRIVATE=gitlab.wcxst.com
+export GOPRIVATE=github.com
 # 配置国内地址
 export GOPROXY=https://goproxy.io
 ```

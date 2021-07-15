@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"time"
 
-	"gitlab.wcxst.com/jormin/gofetcher/pkg/fetcher"
-	"gitlab.wcxst.com/jormin/gohelper"
+	"github.com/jormin/gofetcher/pkg/fetcher"
+	"github.com/jormin/gohelper"
 )
 
 // 引擎
